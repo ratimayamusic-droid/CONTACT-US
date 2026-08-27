@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Hubungi Kami - Cipta Kreasi Event</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -10,15 +10,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    body {
+    /* Reset & Base */
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      min-height: 100vh;
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #0c0a08;
-      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
     }
     .font-heritage {
       font-family: 'Cormorant Garamond', serif;
     }
     
+    /* Background Canvas (Aman untuk Touch Scroll di HP) */
     #nusantara-canvas {
       position: fixed;
       top: 0;
@@ -26,41 +31,42 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      pointer-events: auto;
+      pointer-events: none; /* Mencegah layar HP macet saat disentuh */
     }
 
+    /* Pola Tradisional Nusantara */
     .bg-batik-texture {
       background-image: 
         radial-gradient(ellipse at center, rgba(212, 175, 55, 0.08) 0%, rgba(12, 10, 8, 0.96) 80%),
         repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.025) 0, rgba(212, 175, 55, 0.025) 1px, transparent 0, transparent 28px);
     }
 
+    /* Glassmorphism Card Etnik Mewah */
     .heritage-card {
-      background: rgba(22, 18, 14, 0.85);
+      background: rgba(22, 18, 14, 0.9);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(212, 175, 55, 0.28);
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(212, 175, 55, 0.04);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 25px rgba(212, 175, 55, 0.03);
     }
 
+    /* Efek Logo Emas */
     .brand-logo-img {
-      filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(251, 191, 36, 0.45));
-      transition: transform 0.3s ease;
-    }
-    .brand-logo-img:hover {
-      transform: scale(1.03);
+      filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(251, 191, 36, 0.45));
     }
 
+    /* Input Field Mobile-Optimized (Font 16px cegah auto zoom iOS) */
     .heritage-input {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(212, 175, 55, 0.25);
       color: #fef08a;
-      transition: all 0.3s ease;
+      font-size: 15px;
+      transition: all 0.25s ease;
     }
     .heritage-input:focus {
-      background: rgba(212, 175, 55, 0.07);
+      background: rgba(212, 175, 55, 0.08);
       border-color: #fbbf24;
-      box-shadow: 0 0 15px rgba(251, 191, 36, 0.35);
+      box-shadow: 0 0 14px rgba(251, 191, 36, 0.3);
       outline: none;
     }
 
@@ -71,155 +77,178 @@
     }
   </style>
 </head>
-<body class="text-stone-200 min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative bg-batik-texture">
+<body class="text-stone-200 min-h-screen flex flex-col justify-center items-center p-3 sm:p-6 md:p-10 relative bg-batik-texture">
 
+  <!-- Interactive Canvas -->
   <canvas id="nusantara-canvas"></canvas>
 
-  <div class="fixed top-12 left-12 w-96 h-96 bg-amber-600/15 rounded-full blur-[140px] pointer-events-none"></div>
-  <div class="fixed bottom-12 right-12 w-96 h-96 bg-yellow-700/15 rounded-full blur-[150px] pointer-events-none"></div>
+  <!-- Ambient Glows -->
+  <div class="fixed top-12 left-6 w-72 sm:w-96 h-72 sm:h-96 bg-amber-600/15 rounded-full blur-[100px] pointer-events-none"></div>
+  <div class="fixed bottom-12 right-6 w-72 sm:w-96 h-72 sm:h-96 bg-yellow-700/15 rounded-full blur-[110px] pointer-events-none"></div>
 
-  <div class="relative z-10 w-full max-w-5xl my-auto">
-    <div class="heritage-card rounded-3xl p-6 sm:p-10 md:p-12 relative overflow-hidden">
+  <!-- Container Utama Responsif -->
+  <main class="relative z-10 w-full max-w-5xl my-auto">
+    <div class="heritage-card rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 relative overflow-hidden">
       
-      <div class="absolute top-4 left-4 text-amber-500/40 text-xs tracking-widest pointer-events-none font-serif">❖ ───────────</div>
-      <div class="absolute bottom-4 right-4 text-amber-500/40 text-xs tracking-widest pointer-events-none font-serif">─────────── ❖</div>
+      <!-- Ornamen Sudut (Hanya muncul di layar tablet/desktop agar tidak menabrak di HP) -->
+      <div class="hidden sm:block absolute top-4 left-4 text-amber-500/30 text-xs tracking-widest pointer-events-none font-serif">❖ ────────</div>
+      <div class="hidden sm:block absolute bottom-4 right-4 text-amber-500/30 text-xs tracking-widest pointer-events-none font-serif">──────── ❖</div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
         
-        <!-- Sisi Kiri: Logo & Info -->
+        <!-- Sisi Kiri: Logo & Kontak Resmi -->
         <div class="lg:col-span-5 flex flex-col justify-between space-y-6">
           <div>
-            <div class="mb-6 inline-block">
+            
+            <!-- Logo Section -->
+            <div class="mb-4 sm:mb-6">
               <img 
                 src="1_CIPTA KREASI EVENT.png" 
                 alt="Cipta Kreasi Event" 
-                class="brand-logo-img h-16 sm:h-20 w-auto object-contain"
+                class="brand-logo-img h-14 sm:h-20 w-auto max-w-[220px] sm:max-w-[260px] object-contain"
                 onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='block';"
               />
               <div id="fallback-logo" style="display:none;" class="border border-amber-500/30 p-3 rounded-xl bg-amber-500/10">
-                <span class="font-bold text-amber-300 font-heritage text-xl tracking-wider">CIPTA KREASI EVENT</span>
+                <span class="font-bold text-amber-300 font-heritage text-lg sm:text-xl tracking-wider">CIPTA KREASI EVENT</span>
               </div>
             </div>
 
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs tracking-widest uppercase mb-4 font-semibold">
+            <!-- Badge Kategori -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] sm:text-xs tracking-widest uppercase mb-3 font-semibold">
               <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
               Event Curator & Organizer
             </div>
 
-            <h1 class="font-heritage text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight gold-gradient-text">
-              Rancang Mahakarya Perayaan Anda.
+            <!-- Judul Utama Responsif -->
+            <h1 class="font-heritage text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight gold-gradient-text break-words">
+              Bikin Event Spektakuler Bersama Kami.
             </h1>
-            <p class="text-stone-400 mt-3.5 text-sm leading-relaxed font-light">
-              Menghidupkan kekayaan estetika Nusantara dalam tata panggung dan manajemen acara berkelas tinggi.
+            <p class="text-stone-400 mt-2.5 sm:mt-3.5 text-xs sm:text-sm leading-relaxed font-light">
+              Mulai dari festival musik, konser, gathering korporat, hingga peluncuran produk kreatif. Bagikan ide Anda dan biarkan kami mengeksekusinya!
             </p>
           </div>
 
-          <!-- Kontak -->
-          <div class="space-y-3.5 pt-4 border-t border-amber-500/20">
-            <div class="flex items-center gap-4 text-stone-300">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg">
+          <!-- Info Kontak Resmi -->
+          <div class="space-y-3 pt-4 border-t border-amber-500/20">
+            <div class="flex items-center gap-3.5 text-stone-300">
+              <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-base shrink-0">
                 📍
               </div>
-              <div>
+              <div class="min-w-0">
                 <p class="text-[10px] text-stone-400 uppercase tracking-widest">Kantor & Studio</p>
-                <p class="text-sm font-medium text-stone-200">Jakarta & Yogyakarta, Indonesia</p>
+                <p class="text-xs sm:text-sm font-medium text-stone-200 truncate">Jakarta & Yogyakarta, Indonesia</p>
               </div>
             </div>
 
-            <div class="flex items-center gap-4 text-stone-300">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg">
+            <div class="flex items-center gap-3.5 text-stone-300">
+              <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-base shrink-0">
                 💬
               </div>
-              <div>
+              <div class="min-w-0">
                 <p class="text-[10px] text-stone-400 uppercase tracking-widest">WhatsApp Hotline</p>
-                <a href="https://wa.me/6289505254186" target="_blank" class="text-sm font-medium text-amber-300 hover:text-amber-200 transition-colors">
+                <a href="https://wa.me/6289505254186" target="_blank" class="text-xs sm:text-sm font-medium text-amber-300 hover:text-amber-200 transition-colors">
                   0895-0525-4186
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3.5 text-stone-300">
+              <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-base shrink-0">
+                ✉️
+              </div>
+              <div class="min-w-0">
+                <p class="text-[10px] text-stone-400 uppercase tracking-widest">Official Email</p>
+                <a href="mailto:ciptakreasievent@gmail.com" class="text-xs sm:text-sm font-medium text-stone-200 hover:text-amber-300 transition-colors truncate block">
+                  ciptakreasievent@gmail.com
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Sisi Kanan: Form Hybrid -->
-        <div class="lg:col-span-7 bg-stone-950/60 p-6 sm:p-8 rounded-2xl border border-amber-500/20 shadow-inner">
+        <!-- Sisi Kanan: Form Konsultasi (Mobile-Friendly) -->
+        <div class="lg:col-span-7 bg-stone-950/60 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border border-amber-500/20 shadow-inner">
           <form id="hybridForm" class="space-y-4">
             
+            <!-- Kategori Event Responsif -->
             <div>
-              <label class="block text-[11px] font-semibold text-amber-300/90 uppercase tracking-widest mb-2">Kategori Perhelatan</label>
-              <div class="flex flex-wrap gap-2">
+              <label class="block text-[11px] font-semibold text-amber-300/90 uppercase tracking-widest mb-2.5">Kategori Event</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <label class="cursor-pointer">
-                  <input type="radio" name="event_type" value="Pernikahan Adat & Royal Gala" class="peer sr-only" checked>
-                  <span class="inline-block px-3 py-1.5 rounded-lg text-xs font-medium border border-amber-500/30 bg-stone-900 text-stone-300 peer-checked:bg-amber-600 peer-checked:border-amber-400 peer-checked:text-white transition-all">
-                    Pernikahan Adat
+                  <input type="radio" name="event_type" value="Corporate Meeting & Gala Event" class="peer sr-only" checked>
+                  <span class="block w-full text-center px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium border border-amber-500/30 bg-stone-900 text-stone-300 peer-checked:bg-amber-600 peer-checked:border-amber-400 peer-checked:text-white transition-all">
+                    Corporate Meeting & Gala
                   </span>
                 </label>
                 <label class="cursor-pointer">
-                  <input type="radio" name="event_type" value="Festival Seni & Budaya" class="peer sr-only">
-                  <span class="inline-block px-3 py-1.5 rounded-lg text-xs font-medium border border-amber-500/30 bg-stone-900 text-stone-300 peer-checked:bg-amber-600 peer-checked:border-amber-400 peer-checked:text-white transition-all">
-                    Festival Seni & Budaya
+                  <input type="radio" name="event_type" value="Concert & Music" class="peer sr-only">
+                  <span class="block w-full text-center px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium border border-amber-500/30 bg-stone-900 text-stone-300 peer-checked:bg-amber-600 peer-checked:border-amber-400 peer-checked:text-white transition-all">
+                    Concert & Music
                   </span>
                 </label>
                 <label class="cursor-pointer">
-                  <input type="radio" name="event_type" value="Corporate & Gala Dinner" class="peer sr-only">
-                  <span class="inline-block px-3 py-1.5 rounded-lg text-xs font-medium border border-amber-500/30 bg-stone-900 text-stone-300 peer-checked:bg-amber-600 peer-checked:border-amber-400 peer-checked:text-white transition-all">
-                    Corporate & Gala
+                  <input type="radio" name="event_type" value="Brand Activation" class="peer sr-only">
+                  <span class="block w-full text-center px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium border border-amber-500/30 bg-stone-900 text-stone-300 peer-checked:bg-amber-600 peer-checked:border-amber-400 peer-checked:text-white transition-all">
+                    Brand Activation
                   </span>
                 </label>
                 <label class="cursor-pointer">
-                  <input type="radio" name="event_type" value="Pameran Wastra & Kriya" class="peer sr-only">
-                  <span class="inline-block px-3 py-1.5 rounded-lg text-xs font-medium border border-amber-500/30 bg-stone-900 text-stone-300 peer-checked:bg-amber-600 peer-checked:border-amber-400 peer-checked:text-white transition-all">
-                    Pameran Wastra
+                  <input type="radio" name="event_type" value="Lainnya" class="peer sr-only">
+                  <span class="block w-full text-center px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium border border-amber-500/30 bg-stone-900 text-stone-300 peer-checked:bg-amber-600 peer-checked:border-amber-400 peer-checked:text-white transition-all">
+                    Lainnya
                   </span>
                 </label>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- Input Nama & WA -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label class="block text-[10px] font-semibold text-stone-400 uppercase tracking-wider mb-1">Nama Pemohon / Instansi *</label>
-                <input type="text" name="name" required placeholder="Nama Anda" class="w-full px-4 py-2.5 rounded-xl heritage-input text-sm">
+                <input type="text" name="name" required placeholder="Nama Anda / Perusahaan" class="w-full px-3.5 py-2.5 rounded-xl heritage-input">
               </div>
               <div>
                 <label class="block text-[10px] font-semibold text-stone-400 uppercase tracking-wider mb-1">Nomor WhatsApp *</label>
-                <input type="tel" name="whatsapp" required placeholder="0812xxxx" class="w-full px-4 py-2.5 rounded-xl heritage-input text-sm">
+                <input type="tel" name="whatsapp" required placeholder="0812xxxx" class="w-full px-3.5 py-2.5 rounded-xl heritage-input">
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- Input Email & Tanggal -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label class="block text-[10px] font-semibold text-stone-400 uppercase tracking-wider mb-1">Email *</label>
-                <input type="email" name="email" required placeholder="nama@email.com" class="w-full px-4 py-2.5 rounded-xl heritage-input text-sm">
+                <input type="email" name="email" required placeholder="nama@email.com" class="w-full px-3.5 py-2.5 rounded-xl heritage-input">
               </div>
               <div>
                 <label class="block text-[10px] font-semibold text-stone-400 uppercase tracking-wider mb-1">Estimasi Tanggal Acara</label>
-                <input type="date" name="event_date" class="w-full px-4 py-2.5 rounded-xl heritage-input text-sm">
+                <input type="date" name="event_date" class="w-full px-3.5 py-2.5 rounded-xl heritage-input text-stone-300">
               </div>
             </div>
 
+            <!-- Detail Pesan -->
             <div>
               <label class="block text-[10px] font-semibold text-stone-400 uppercase tracking-wider mb-1">Konsep / Detail Acara</label>
-              <textarea name="message" rows="3" placeholder="Ceritakan ide perayaan atau kebutuhan acara Anda..." class="w-full px-4 py-2.5 rounded-xl heritage-input text-sm resize-none"></textarea>
+              <textarea name="message" rows="3" placeholder="Ceritakan konsep acara, estimasi partisipan, atau kebutuhan khusus lainnya..." class="w-full px-3.5 py-2.5 rounded-xl heritage-input resize-none"></textarea>
             </div>
 
-            <button id="submitBtn" type="submit" class="w-full py-3.5 px-6 rounded-xl font-bold tracking-widest text-stone-950 bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-[1.01] shadow-lg shadow-amber-600/30 uppercase text-xs flex items-center justify-center gap-2">
+            <!-- Tombol Kirim -->
+            <button id="submitBtn" type="submit" class="w-full py-3.5 sm:py-4 px-4 rounded-xl font-bold tracking-widest text-stone-950 bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-amber-600/30 uppercase text-[11px] sm:text-xs flex items-center justify-center gap-2 cursor-pointer">
               <span id="btnText">Konsultasikan via WhatsApp & Simpan</span>
-              <span>✦</span>
+              <span class="text-stone-950 font-bold">✦</span>
             </button>
           </form>
         </div>
 
       </div>
     </div>
-  </div>
+  </main>
 
   <script>
     // =========================================================================
     // ⚙️ KONFIGURASI INTEGRASI CIPTA KREASI EVENT
     // =========================================================================
-    // 1. Ganti tanda kutip di bawah dengan Web App URL dari Google Apps Script:
+    // Tempelkan Web App URL Google Script Anda di bawah ini:
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXOYJyTlWZQY4gedSzfyFfgYhU8t6RjUbyMd-IM31yRdWGL4RHAV6k_FnDippSOVr6Yg/exec"; 
-    
-    // 2. Nomor WhatsApp Admin (089505254186 -> 6289505254186)
     const ADMIN_WHATSAPP_NUMBER = "6289505254186"; 
 
     // Handle Form Submit
@@ -241,16 +270,24 @@
       const date = formData.get('event_date') || 'Belum Ditentukan';
       const msg = formData.get('message') || '-';
 
-      // 1. Kirim ke Google Sheets & Notifikasi Email (Background Fetch)
-      if (GOOGLE_SCRIPT_URL && !GOOGLE_SCRIPT_URL.includes("TEMPEL_URL")) {
+      const params = new URLSearchParams();
+      params.append('event_type', type);
+      params.append('name', name);
+      params.append('whatsapp', wa);
+      params.append('email', email);
+      params.append('event_date', date);
+      params.append('message', msg);
+
+      // 1. Kirim Data ke Google Sheets & Email
+      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith("https://script.google.com")) {
         fetch(GOOGLE_SCRIPT_URL, {
           method: 'POST',
-          body: formData,
+          body: params,
           mode: 'no-cors'
-        }).catch(err => console.log('Background Sync:', err));
+        }).catch(err => console.error("Error background send:", err));
       }
 
-      // 2. Buat Format Chat WhatsApp yang Rapi
+      // 2. Format Chat WhatsApp
       const waText = 
         `*Halo Cipta Kreasi Event, saya ingin konsultasi acara!*%0A%0A` +
         `• *Nama / Instansi:* ${encodeURIComponent(name)}%0A` +
@@ -263,7 +300,7 @@
 
       const waURL = `https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${waText}`;
 
-      // 3. Buka WhatsApp & Reset Form
+      // 3. Arahkan ke WhatsApp
       setTimeout(() => {
         submitBtn.disabled = false;
         btnText.innerText = "Konsultasikan via WhatsApp & Simpan";
@@ -277,7 +314,7 @@
     // ==========================================
     const canvas = document.getElementById('nusantara-canvas');
     const ctx = canvas.getContext('2d');
-    let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2, radius: 180 };
+    let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2, radius: 150 };
     let step = 0;
 
     function resize() {
@@ -296,10 +333,10 @@
       constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * canvas.width;
-        this.y = canvas.height + Math.random() * 40;
-        this.size = Math.random() * 2 + 0.6;
-        this.vy = -(Math.random() * 0.6 + 0.2);
-        this.vx = (Math.random() - 0.5) * 0.4;
+        this.y = canvas.height + Math.random() * 30;
+        this.size = Math.random() * 2 + 0.5;
+        this.vy = -(Math.random() * 0.5 + 0.2);
+        this.vx = (Math.random() - 0.5) * 0.3;
         this.alpha = Math.random() * 0.6 + 0.2;
       }
       update() {
@@ -315,30 +352,31 @@
       }
     }
 
-    const dustParticles = Array.from({ length: 45 }, () => {
+    const dustParticles = Array.from({ length: 35 }, () => {
       const p = new GoldDust();
       p.y = Math.random() * canvas.height;
       return p;
     });
 
     function drawGoldenWaves() {
-      const lines = 6;
-      const baseHeight = canvas.height * 0.52;
+      const lines = 5;
+      const baseHeight = canvas.height * 0.55;
       for (let i = 0; i < lines; i++) {
         ctx.beginPath();
-        ctx.lineWidth = i % 2 === 0 ? 1.5 : 2.5;
-        const alpha = 0.09 + (i * 0.03);
+        ctx.lineWidth = i % 2 === 0 ? 1.5 : 2;
+        const alpha = 0.08 + (i * 0.025);
         ctx.strokeStyle = `rgba(234, 179, 8, ${alpha})`;
-        for (let x = 0; x < canvas.width; x += 15) {
-          let wave1 = Math.sin(x * 0.003 + step + i * 0.4) * 50;
-          let wave2 = Math.cos(x * 0.006 - step * 0.6) * 30;
-          let y = baseHeight + wave1 + wave2 + (i * 32);
+        for (let x = 0; x < canvas.width; x += 20) {
+          let wave1 = Math.sin(x * 0.003 + step + i * 0.4) * 45;
+          let wave2 = Math.cos(x * 0.006 - step * 0.6) * 25;
+          let y = baseHeight + wave1 + wave2 + (i * 28);
+          
           let dx = mouse.x - x;
           let dy = mouse.y - y;
           let dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < mouse.radius) {
             let force = (mouse.radius - dist) / mouse.radius;
-            y += Math.sin(dist * 0.05 - step * 2) * force * 35;
+            y += Math.sin(dist * 0.05 - step * 2) * force * 30;
           }
           if (x === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
@@ -350,7 +388,7 @@
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawGoldenWaves();
-      step += 0.012;
+      step += 0.01;
       dustParticles.forEach(p => { p.update(); p.draw(); });
       requestAnimationFrame(animate);
     }
